@@ -3,7 +3,7 @@ if nargin < 3
     error('There are not enough arguments; please check the help')
 end
 
-function [all_mats, all_behav] = check_data(all_mats, all_behav)
+function [all_mats, all_behav] = check_data(all_mats, all_behav, folds)
 
 %This function checks the dataset to make sure it is in a format usable by
 %CPM
@@ -40,9 +40,14 @@ if size(all_mats,3)~=size(all_behav,1)
     warning('there are NOT the same number of subjects in the all_mats and all_behav variable')
 end
 
-% Check to make sure there are at least three subjects in the input data
-if size(all_mats,3)<3
-    warning('Not enough subjects to train and test the models')
+% Check to make sure there are at least ten subjects in the input data
+if size(all_mats,3)<10
+    warning('the CPM code requires >10 subjects to function properly; sound results likely require >>10.')
+end
+
+% Check to make sure you have more subjects than folds
+if size(all_mats,3)<folds
+    warning('You must have more subjects than folds in your cross validation. Please check the help documentation.')
 end
 
 %3) Check there are the same number of nodes, that all_mats is symmetric
