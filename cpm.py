@@ -252,7 +252,17 @@ def kfold_cpm(X,y,k):
     return behav_pred_pos,behav_pred_neg,behav_actual
 
 
-def sample_500(ipmats,pheno,cvtype):
+def sample_500(X,y,cv_type):
+    """
+    Accepts input matrices and pheno data
+    Returns 500 random samples from data
+    @author: David O'Connor
+    @documentation: Javid Dadashkarimi
+    X: is the input matrix in v*v*n which v is number of nodes and n is the number of subjects 
+    y: is the gold data which is fluid intelligence
+    k: is the size of folds in k-fold
+    """
+
 
     numsubs=ipmats.shape[2]
 
