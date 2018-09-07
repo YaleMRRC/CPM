@@ -94,7 +94,10 @@ def pairwise_corr(X,Y):
     return numer/denom
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d4cca93d38df8d258ace7700fab353f214840835
 def run_validate(X,y,cv_type):
     
     
@@ -192,6 +195,21 @@ def run_validate(X,y,cv_type):
 
 
 def kfold_cpm(ipmats,pheno,numsubs,k):
+  """
+    Accepts input matrices and pheno data
+    Returns model
+    @author: David O'Connor
+    @documentation: Javid Dadashkarimi
+    cpm: in cpm we select the most significant edges for subjects. so each subject
+         have a pair set of edges with positive and negative correlation with behavioral subjects.
+         It's important to keep both set in final regression task.  
+    posedges: positive edges are a set of edges have positive
+              correlatin with behavioral measures
+    negedges: negative edges are a set of edges have negative
+              correlation with behavioral measures
+    """
+
+
     randinds=np.arange(0,numsubs)
     random.shuffle(randinds)
 
