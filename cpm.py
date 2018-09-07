@@ -8,24 +8,27 @@ from scipy import stats
 import random
 
 
-def read_mats(iplist):
+def read_mats(fn_list):
+    """
+    Accepts list of csv file names where each csv contains a single subject FC matrix
+    Returns stacked matrices
+    """
 
-    x=[pd.read_csv(m,sep='\t',header=None) for m in iplist]
-    x=[df.dropna(axis=1).values for df in x]
-    ipmats=np.stack(x,axis=2)
+    fns = [pd.read_csv(m, sep='\t', header=None) for fn in fn_list]
+    fns = [df.dropna(axis=1).values for df in fns]
+    fn_mats = np.stack(fns, axis=2)
 
-    return ipmats
+    return fn_mats
 
 
-
-def train_cpm(ipmat,pheno):
+def train_cpm(ipmat, pheno):
 
     """
     Accepts input matrices and pheno data
     Returns model
     """
 
-    cc=[stats.pearsonr(pheno,im) for im in ipmat]
+    cc=[stats.pearsonr(pheno,im) for im in fn_mats]
 
 
 
@@ -57,6 +60,10 @@ def train_cpm(ipmat,pheno):
 
 
 def pairwise_corr(X,Y):
+    """
+    Accepts ...
+    Returns ...
+    """
 
     #A=A.astype('float64')
 
