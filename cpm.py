@@ -10,17 +10,16 @@ import glob
 
 
 def generate_csv_list(path):
-    iplist = glob.glob(path+'/*')
-    return iplist
+    fn_list = glob.glob(path+'/*')
+    return fn_list
 
 def read_mats(fn_list):
     """
     Accepts list of csv file names where each csv contains a single subject FC matrix
     Returns stacked matrices
     """
-
-    fns = [pd.read_csv(m, sep='\t', header=None) for fn in fn_list]
-    fns = [df.dropna(axis=1).values for df in fns]
+    fns = [pd.read_csv(fn, header=None) for fn in fn_list]
+    fns = [df.dropna(axis=1).values for df in fns]            
     fn_mats = np.stack(fns, axis=2)
     return fn_mats
 
@@ -94,10 +93,6 @@ def pairwise_corr(X,Y):
     return numer/denom
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d4cca93d38df8d258ace7700fab353f214840835
 def run_validate(X,y,cv_type):
     
     
@@ -106,7 +101,7 @@ def run_validate(X,y,cv_type):
     Returns the R-values for positive model (Rpos), negative model (Rneg), and the combination
     @author: David O'Connor
     @documentation: Mehraveh Salehi
-    X: the input matrix of size (nu)
+    X: the input matrix of size (number of nodes x number of nodes x number of subjects)
     """
 
 
