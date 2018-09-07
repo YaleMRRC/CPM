@@ -9,11 +9,9 @@ import random
 
 
 def read_mats(iplist):
-
-    x=[pd.read_csv(m,sep='\t',header=None) for m in iplist]
+    x=[pd.read_csv(m,sep='\t',header=None) for m in iplist] 
     x=[df.dropna(axis=1).values for df in x]
     ipmats=np.stack(x,axis=2)
-
     return ipmats
 
 
@@ -35,9 +33,6 @@ def train_cpm(ipmat,pheno):
     """
 
     cc=[stats.pearsonr(pheno,im) for im in ipmat]
-
-
-
     rmat=np.array([c[0] for c in cc])
     pmat=np.array([c[1] for c in cc])
     rmat=np.reshape(rmat,[268,268])
@@ -86,6 +81,7 @@ def pairwise_corr(X,Y):
     return numer/denom
 
 
+<<<<<<< HEAD
 def run_validate(ipmats,pheno,cvtype):
     """
     Accepts input matrices and pheno data
@@ -94,8 +90,16 @@ def run_validate(ipmats,pheno,cvtype):
     @documentation: Javid Dadashkarimi
     """
 
+=======
+def run_validate(X,y,cv_type):
+    
+    
+    """
+    X is the matrix of all features. and y is the 
+    """    
+>>>>>>> d231abb65745bbc775b0cb09c6848748f6ba5c2a
 
-    numsubs=ipmats.shape[2]
+    num_subs=ipmats.shape[2]
     ipmats=np.reshape(ipmats,[-1,numsubs])
 
     
@@ -111,7 +115,7 @@ def run_validate(ipmats,pheno,cvtype):
             train_pheno=np.delete(pheno,[loo],axis=0)
             
             test_mat=ipmats[:,loo]
-            test_phenp=pheno[loo]
+            test_pheno=pheno[loo]
 
             pos_fit,neg_fit,posedges,negedges=train_cpm(train_mats,train_pheno)
 
