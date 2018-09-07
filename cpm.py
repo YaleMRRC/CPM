@@ -8,7 +8,6 @@ from scipy import stats
 import random
 
 
-<<<<<<< HEAD
 def read_mats(fn_list):
     """
     Accepts list of csv file names where each csv contains a single subject FC matrix
@@ -18,14 +17,6 @@ def read_mats(fn_list):
     fns = [pd.read_csv(m, sep='\t', header=None) for fn in fn_list]
     fns = [df.dropna(axis=1).values for df in fns]
     fn_mats = np.stack(fns, axis=2)
-=======
-def read_mats(iplist):
-    x=[pd.read_csv(m,sep='\t',header=None) for m in iplist] 
-    x=[df.dropna(axis=1).values for df in x]
-    ipmats=np.stack(x,axis=2)
-    return ipmats
->>>>>>> 5f6f7e4e125973f50b534509f6fa37cdbec6dd16
-
     return fn_mats
 
 
