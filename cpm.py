@@ -21,7 +21,7 @@ def read_mats(fn_list):
     return fn_mats
 
 
-def train_cpm(ipmat, pheno):
+def train_cpm(fn_mats, pheno):
 
     """
     Accepts input matrices and pheno data
