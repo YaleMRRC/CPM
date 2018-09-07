@@ -87,6 +87,13 @@ def pairwise_corr(X,Y):
 
 
 def run_validate(ipmats,pheno,cvtype):
+    """
+    Accepts input matrices and pheno data
+    Returns model
+    @author: David O'Connor
+    @documentation: Javid Dadashkarimi
+    """
+
 
     numsubs=ipmats.shape[2]
     ipmats=np.reshape(ipmats,[-1,numsubs])
