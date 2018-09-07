@@ -41,14 +41,7 @@ def train_cpm(fn_mats, pheno):
               correlation with behavioral measures
     """
 
-<<<<<<< HEAD
     cc=[stats.pearsonr(pheno,im) for im in fn_mats]
-
-
-
-=======
-    cc=[stats.pearsonr(pheno,im) for im in ipmat]
->>>>>>> 5f6f7e4e125973f50b534509f6fa37cdbec6dd16
     rmat=np.array([c[0] for c in cc])
     pmat=np.array([c[1] for c in cc])
     rmat=np.reshape(rmat,[268,268])
@@ -101,7 +94,7 @@ def pairwise_corr(X,Y):
     return numer/denom
 
 
-<<<<<<< HEAD
+
 def run_validate(X,y,cv_type):
     
     
@@ -116,10 +109,6 @@ def run_validate(X,y,cv_type):
 
 
     num_subs=X.shape[2]
-=======
-def run_validate(ipmats,pheno,cvtype):
-    num_subs=ipmats.shape[2]
->>>>>>> d4a078c937887ff4faf9b3185c43b9ca86be088d
     ipmats=np.reshape(ipmats,[-1,numsubs])
 
     
