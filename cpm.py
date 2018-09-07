@@ -6,7 +6,12 @@ import pandas as pd
 import glob
 from scipy import stats
 import random
+import glob
 
+
+def generate_csv_list(path):
+    iplist = glob.glob(path+'/*')
+    return iplist
 
 def read_mats(iplist):
     x=[pd.read_csv(m,sep='\t',header=None) for m in iplist] 
@@ -85,10 +90,16 @@ def run_validate(X,y,cv_type):
     
     
     """
-    X is the matrix of all features. and y is the 
-    """    
+    Accepts input matrices (X), phenotype data (y), and the type of cross-valdiation (cv_type)
+    Returns the R-values for positive model (Rpos), negative model (Rneg), and the combination
+    @author: David O'Connor
+    @documentation: Mehraveh Salehi
+    X: the input matrix of size (nu)
+    """
 
-    num_subs=ipmats.shape[2]
+
+
+    num_subs=X.shape[2]
     ipmats=np.reshape(ipmats,[-1,numsubs])
 
     
