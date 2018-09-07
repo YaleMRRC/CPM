@@ -190,19 +190,18 @@ def run_validate(X,y,cv_type):
     
 
 
-def kfold_cpm(ipmats,pheno,numsubs,k):
+def kfold_cpm(X,y,k):
     """
     Accepts input matrices and pheno data
     Returns model
     @author: David O'Connor
     @documentation: Javid Dadashkarimi
-    ipmats:
-    pheno:
-    numsubs:
-    k:
+    X: is the input matrix in v*v*n which v is number of nodes and n is the number of subjects 
+    y: is the gold data which is fluid intelligence
+    k: is the size of folds in k-fold
     """
 
-
+    numsubs = X.shape[2]
     randinds=np.arange(0,numsubs)
     random.shuffle(randinds)
 
