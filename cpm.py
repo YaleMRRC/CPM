@@ -97,20 +97,20 @@ def run_validate(X,y,cv_type):
     
     
     """
-    Accepts input matrices (X), phenotype data (y), and the type of cross-valdiation (cv_type)
+    Accepts input matrices (X), phenotype data (y), and the type of cross-valdiation (cv_type)    
     Returns the R-values for positive model (Rpos), negative model (Rneg), and the combination
     @author: David O'Connor
     @documentation: Mehraveh Salehi
-    X: the input matrix of size (number of nodes x number of nodes x number of subjects)
+    X: the feature matrix of size (number of nodes x number of nodes x number of subjects)
+    y: the phenotype vector of size (number of subjects)
+    cv_type: the cross-valdiation type, takes one of the followings: 
+    1) LOO: leave-one-out cross-validation
+    2) 5k: 
     """
-
-
-
     num_subs=X.shape[2]
-    ipmats=np.reshape(ipmats,[-1,numsubs])
+    X=np.reshape(X,[-1,num_subs])
 
     
-
     if cvtype == 'LOO':
         behav_pred_pos=np.zeros([numsubs])
         behav_pred_neg=np.zeros([numsubs])
