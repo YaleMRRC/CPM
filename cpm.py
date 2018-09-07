@@ -13,8 +13,8 @@ def read_mats(fn_list):
     Accepts list of csv file names where each csv contains a single subject FC matrix
     Returns stacked matrices
     """
-
-    fns = [pd.read_csv(m, sep='\t', header=None) for fn in fn_list]
+    
+    fns = [pd.read_csv(fn, header=None) for fn in fn_list]
     fns = [df.dropna(axis=1).values for df in fns]
     fn_mats = np.stack(fns, axis=2)
     return fn_mats
@@ -36,14 +36,7 @@ def train_cpm(fn_mats, pheno):
               correlation with behavioral measures
     """
 
-<<<<<<< HEAD
     cc=[stats.pearsonr(pheno,im) for im in fn_mats]
-
-
-
-=======
-    cc=[stats.pearsonr(pheno,im) for im in ipmat]
->>>>>>> 5f6f7e4e125973f50b534509f6fa37cdbec6dd16
     rmat=np.array([c[0] for c in cc])
     pmat=np.array([c[1] for c in cc])
     rmat=np.reshape(rmat,[268,268])
