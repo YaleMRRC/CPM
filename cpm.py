@@ -6,7 +6,12 @@ import pandas as pd
 import glob
 from scipy import stats
 import random
+import glob
 
+
+def generate_csv_list(path):
+    iplist = glob.glob(path+'/*')
+    return iplist
 
 def read_mats(fn_list):
     """
@@ -89,8 +94,20 @@ def pairwise_corr(X,Y):
     return numer/denom
 
 
-def run_validate(ipmats,pheno,cvtype):
-    num_subs=ipmats.shape[2]
+def run_validate(X,y,cv_type):
+    
+    
+    """
+    Accepts input matrices (X), phenotype data (y), and the type of cross-valdiation (cv_type)
+    Returns the R-values for positive model (Rpos), negative model (Rneg), and the combination
+    @author: David O'Connor
+    @documentation: Mehraveh Salehi
+    X: the input matrix of size (nu)
+    """
+
+
+
+    num_subs=X.shape[2]
     ipmats=np.reshape(ipmats,[-1,numsubs])
 
     
@@ -174,6 +191,18 @@ def run_validate(ipmats,pheno,cvtype):
 
 
 def kfold_cpm(ipmats,pheno,numsubs,k):
+    """
+    Accepts input matrices and pheno data
+    Returns model
+    @author: David O'Connor
+    @documentation: Javid Dadashkarimi
+    ipmats:
+    pheno:
+    numsubs:
+    k:
+    """
+
+
     randinds=np.arange(0,numsubs)
     random.shuffle(randinds)
 
