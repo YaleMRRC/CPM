@@ -81,24 +81,7 @@ def pairwise_corr(X,Y):
     return numer/denom
 
 
-<<<<<<< HEAD
 def run_validate(ipmats,pheno,cvtype):
-    """
-    Accepts input matrices and pheno data
-    Returns model
-    @author: David O'Connor
-    @documentation: Javid Dadashkarimi
-    """
-
-=======
-def run_validate(X,y,cv_type):
-    
-    
-    """
-    X is the matrix of all features. and y is the 
-    """    
->>>>>>> d231abb65745bbc775b0cb09c6848748f6ba5c2a
-
     num_subs=ipmats.shape[2]
     ipmats=np.reshape(ipmats,[-1,numsubs])
 
