@@ -18,8 +18,14 @@ def read_mats(fn_list):
     Accepts list of csv file names where each csv contains a single subject FC matrix
     Returns stacked matrices
     """
+<<<<<<< HEAD
     fns = [pd.read_csv(fn, header=None) for fn in fn_list]
     fns = [df.dropna(axis=1).values for df in fns]            
+=======
+    
+    fns = [pd.read_csv(fn, header=None) for fn in fn_list]
+    fns = [df.dropna(axis=1).values for df in fns]
+>>>>>>> a7204e6f50b9690d092752ec1bc3f0ac158434b1
     fn_mats = np.stack(fns, axis=2)
     return fn_mats
 
@@ -189,22 +195,18 @@ def run_validate(X,y,cv_type):
     
 
 
-def kfold_cpm(ipmats,pheno,numsubs,k):
-  """
+def kfold_cpm(X,y,k):
+    """
     Accepts input matrices and pheno data
     Returns model
     @author: David O'Connor
     @documentation: Javid Dadashkarimi
-    cpm: in cpm we select the most significant edges for subjects. so each subject
-         have a pair set of edges with positive and negative correlation with behavioral subjects.
-         It's important to keep both set in final regression task.  
-    posedges: positive edges are a set of edges have positive
-              correlatin with behavioral measures
-    negedges: negative edges are a set of edges have negative
-              correlation with behavioral measures
+    X: is the input matrix in v*v*n which v is number of nodes and n is the number of subjects 
+    y: is the gold data which is fluid intelligence
+    k: is the size of folds in k-fold
     """
 
-
+    numsubs = X.shape[2]
     randinds=np.arange(0,numsubs)
     random.shuffle(randinds)
 
