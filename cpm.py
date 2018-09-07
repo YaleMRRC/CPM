@@ -94,10 +94,6 @@ def pairwise_corr(X,Y):
     return numer/denom
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d4cca93d38df8d258ace7700fab353f214840835
 def run_validate(X,y,cv_type):
     
     
