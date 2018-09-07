@@ -18,8 +18,8 @@ def read_mats(fn_list):
     Accepts list of csv file names where each csv contains a single subject FC matrix
     Returns stacked matrices
     """
-
-    fns = [pd.read_csv(m, sep='\t', header=None) for fn in fn_list]
+    
+    fns = [pd.read_csv(fn, header=None) for fn in fn_list]
     fns = [df.dropna(axis=1).values for df in fns]
     fn_mats = np.stack(fns, axis=2)
     return fn_mats
