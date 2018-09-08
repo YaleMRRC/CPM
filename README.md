@@ -1,7 +1,7 @@
 # CPM Project
 
 <center>
-<img src="/images/hcp.svg"/>
+<img src="/images/cpm.svg"/>
 </center>
 
 
