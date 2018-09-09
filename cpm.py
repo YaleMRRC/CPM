@@ -99,8 +99,6 @@ def run_validate(X,y,cv_type):
     """
     Accepts input matrices (X), phenotype data (y), and the type of cross-valdiation (cv_type)    
     Returns the R-values for positive model (Rpos), negative model (Rneg), and the combination
-    @author: David O'Connor
-    @documentation: Mehraveh Salehi
     X: the feature matrix of size (number of nodes x number of nodes x number of subjects)
     y: the phenotype vector of size (number of subjects)
     cv_type: the cross-valdiation type, takes one of the followings: 
