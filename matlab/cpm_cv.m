@@ -9,12 +9,14 @@ function [mdl_summary, mdl_features, y_test, y_predict]=cpm_cv(x,y,pthresh,kfold
 % splitting data
 nsubs=size(x,2);
 nfeats=size(x,1);
-randinds=randperm(nsubs);
+%randinds=randperm(nsubs);
+randinds=1:nsubs; % TODO: restore the above (temp for testing)
 ksample=floor(nsubs/kfolds);
 
 % maybe preallocate
 
-fprintf('\n# Running over %1.0f Folds. Performing fold # ',kfolds);
+fprintf('\n# Running over %1.0f Folds.\nPerforming fold no. ',kfolds);
+
 for leftout = 1:kfolds
     fprintf('%1.0f ',leftout);
     
@@ -48,8 +50,6 @@ end
 
 mdl_summary=0; %TBD
 mdl_features=0;%TBD
-
-fprintf('\n');
     
     
     
