@@ -6,17 +6,25 @@ import pandas as pd
 import glob
 from scipy import stats
 import random
+import glob
 
 
-def read_mats(iplist):
-    x=[pd.read_csv(m,sep='\t',header=None) for m in iplist] 
-    x=[df.dropna(axis=1).values for df in x]
-    ipmats=np.stack(x,axis=2)
-    return ipmats
+def generate_csv_list(path):
+    fn_list = glob.glob(path+'/*')
+    return fn_list
+
+def read_mats(fn_list):
+    """
+    Accepts list of csv file names where each csv contains a single subject FC matrix
+    Returns stacked matrices
+    """
+    fns = [pd.read_csv(fn, header=None) for fn in fn_list]
+    fns = [df.dropna(axis=1).values for df in fns]            
+    fn_mats = np.stack(fns, axis=2)
+    return fn_mats
 
 
-
-def train_cpm(ipmat,pheno):
+def train_cpm(fn_mats, pheno):
 
     """
     Accepts input matrices and pheno data
@@ -32,7 +40,7 @@ def train_cpm(ipmat,pheno):
               correlation with behavioral measures
     """
 
-    cc=[stats.pearsonr(pheno,im) for im in ipmat]
+    cc=[stats.pearsonr(pheno,im) for im in fn_mats]
     rmat=np.array([c[0] for c in cc])
     pmat=np.array([c[1] for c in cc])
     rmat=np.reshape(rmat,[268,268])
@@ -61,6 +69,10 @@ def train_cpm(ipmat,pheno):
 
 
 def pairwise_corr(X,Y):
+    """
+    Accepts ...
+    Returns ...
+    """
 
     #A=A.astype('float64')
 
@@ -85,14 +97,18 @@ def run_validate(X,y,cv_type):
     
     
     """
-    X is the matrix of all features. and y is the 
-    """    
-
-    num_subs=ipmats.shape[2]
-    ipmats=np.reshape(ipmats,[-1,numsubs])
+    Accepts input matrices (X), phenotype data (y), and the type of cross-valdiation (cv_type)    
+    Returns the R-values for positive model (Rpos), negative model (Rneg), and the combination
+    X: the feature matrix of size (number of nodes x number of nodes x number of subjects)
+    y: the phenotype vector of size (number of subjects)
+    cv_type: the cross-valdiation type, takes one of the followings: 
+    1) LOO: leave-one-out cross-validation
+    2) 5k: 
+    """
+    num_subs=X.shape[2]
+    X=np.reshape(X,[-1,num_subs])
 
     
-
     if cvtype == 'LOO':
         behav_pred_pos=np.zeros([numsubs])
         behav_pred_neg=np.zeros([numsubs])
@@ -171,7 +187,18 @@ def run_validate(X,y,cv_type):
     
 
 
-def kfold_cpm(ipmats,pheno,numsubs,k):
+def kfold_cpm(X,y,k):
+    """
+    Accepts input matrices and pheno data
+    Returns model
+    @author: David O'Connor
+    @documentation: Javid Dadashkarimi
+    X: is the input matrix in v*v*n which v is number of nodes and n is the number of subjects 
+    y: is the gold data which is fluid intelligence
+    k: is the size of folds in k-fold
+    """
+
+    numsubs = X.shape[2]
     randinds=np.arange(0,numsubs)
     random.shuffle(randinds)
 
@@ -223,7 +250,17 @@ def kfold_cpm(ipmats,pheno,numsubs,k):
     return behav_pred_pos,behav_pred_neg,behav_actual
 
 
-def sample_500(ipmats,pheno,cvtype):
+def sample_500(X,y,cv_type):
+    """
+    Accepts input matrices and pheno data
+    Returns 500 random samples from data
+    @author: David O'Connor
+    @documentation: Javid Dadashkarimi
+    X: is the input matrix in v*v*n which v is number of nodes and n is the number of subjects 
+    y: is the gold data which is fluid intelligence
+    k: is the size of folds in k-fold
+    """
+
 
     numsubs=ipmats.shape[2]
 
