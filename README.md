@@ -1,8 +1,6 @@
 # Connectome-based Predictive Modelling
 
-<center>
-<img src="/images/cpm.jpg"/>
-</center>
+![alt text]('images/cpm.jpg')
 
 
 Connectome-based Predictive Modeling (CPM) is a data-driven protocol for developing predictive models of brain-behavior relationships from connectivity data using cross-validation. The protocol includes the following steps: 1) feature selection, 2) feature summarization, 3) model building, and 4) assessment of prediction significance.
@@ -21,7 +19,7 @@ addpath('localpath/CPM/matlab/')
 ```matlab
 [y_predict, performance] = cpm_main(x,y)
 ```
-    This will run split half cross validation, and use a p threshold of 0.01 to select features. These 
+   This will run split half cross validation, and use a p threshold of 0.01 to select features. These 
 default values can be changed, for example: 
 ```matlab
 [y_predict, performance] = cpm_main(x,y,'pthresh',0.05,'kfolds',10)
