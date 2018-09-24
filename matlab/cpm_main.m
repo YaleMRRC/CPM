@@ -1,4 +1,4 @@
-function [mdl_summary, mdl_features, y_predict, performance] = cpm_main(x,y,varargin)
+function [y_predict, performance] = cpm_main(x,y,varargin)
 %% Performs Connectome-Based Predictive Modeling (CPM)
 % See Shen et al., 2013
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -9,15 +9,16 @@ function [mdl_summary, mdl_features, y_predict, performance] = cpm_main(x,y,vara
 % Optional parameters: TBD
 %
 % OUTPUTS
-% returns mdl, a structure containing the predictive edges and associated p and r vals
+% returns perf, an array containing the predictive edges and associated p
+% and r vals and y_predict, the predicted values. 
 %
-% e.g., [m1,m2,yhat,perf]=cpm_main(data,gF,'pthresh',0.05,'kfolds',2);
+% e.g., [yhat,perf]=cpm_main(data,gF,'pthresh',0.05,'kfolds',2);
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Parse input
 p=inputParser;
 defaultpthresh=0.01;
-defaultkfolds=2; % TODO: take + loop over vec of different kfolds
+defaultkfolds=2; 
 
 addRequired(p,'x',@isnumeric);
 addRequired(p,'y',@isnumeric); % must be n x nsubs
@@ -36,8 +37,8 @@ clearvars p
 [x,y]=cpm_check_errors(x,y,kfolds);
 
 %% Run train / test
-[mdl_summary,mdl_features,y_test, y_predict]=cpm_cv(x,y,pthresh,kfolds);
-% TODO: choose + return mdl_summary, mdl_features
+[y_test, y_predict]=cpm_cv(x,y,pthresh,kfolds);
+
 
 %% Check performance
 [performance(1),performance(2)]=corr(y_predict(:),y_test(:));

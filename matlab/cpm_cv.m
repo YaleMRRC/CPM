@@ -1,19 +1,15 @@
-function [mdl_summary, mdl_features, y_test, y_predict]=cpm_cv(x,y,pthresh,kfolds)
+function [y_test, y_predict]=cpm_cv(x,y,pthresh,kfolds)
 % call from predict_behavior
-% can provide previously defined models (mdl1,mdl2) as input
-% can convert binarized to weighted--see 3 chunks below
+% Runs cross validation based on CPM framework. Accepts explanatory
+% variable "x", target variable "y", significance threshold "pthresh", and
+% number of folds "kfolds" (2 =split half, 10 = ten fold etc.).
 
-% TODO: catch kfold outside
-% TODO: save features
 
 % splitting data
 nsubs=size(x,2);
 nfeats=size(x,1);
-%randinds=randperm(nsubs);
-randinds=1:nsubs; % TODO: restore the above (temp for testing)
+randinds=randperm(nsubs);
 ksample=floor(nsubs/kfolds);
-
-% maybe preallocate
 
 fprintf('\n# Running over %1.0f Folds.\nPerforming fold no. ',kfolds);
 
@@ -48,8 +44,6 @@ for leftout = 1:kfolds
     
 end
 
-mdl_summary=0; %TBD
-mdl_features=0;%TBD
     
     
     

@@ -1,20 +1,20 @@
 function [r,p,pmask,mdl]=cpm_train(x,y,pthresh)
-% call from predict_behavior
+% call from cpm_cv
+% Train a model using CPM framework
+% Accepts the explanatory variable, "x", the target variable "y" and the
+% significance threshold "pthresh"
 
-% feature selection from all train subs
+% Feature selection from all train subs
 [r,p]=corr(x',y);
-pmask=(+(r>0))-(+(r<0)); % BINARIZED
+% Binarized mask of features
+pmask=(+(r>0))-(+(r<0)); 
 pmask=pmask.*(+(p<pthresh));
 
-% get summary features for each train sub
+% Get summary features for each train sub
 for i=1:size(x,2)
-    % TODO: options for sum v mean, pos v neg v all
-    summary_feature(i)=nanmean(x(pmask>0,i))-nanmean(x(pmask<0,i)); % 1. extract features
-%     summary_feature(i)=nanmean(x(:,i).*+(pmask>0))-nanmean(x(:,i).*+(pmask<0)); % 2. keep zeros
+    summary_feature(i)=nanmean(x(pmask>0,i))-nanmean(x(pmask<0,i));
 end
 
-% fit behavior to summary features
-% mdl=polyfit(summary_feature,y',1); % 1. polyval
-mdl=robustfit(summary_feature,y'); % 2. robust regression
-    
+% Fit behavior to summary features
+mdl=robustfit(summary_feature,y');    
     

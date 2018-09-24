@@ -1,6 +1,4 @@
-%% Check that there are 3 input variables
 function [x, y] = cpm_check_errors(x, y, folds)
-% TODO: rename to setup? since vectorizes x, too
 %This function checks the dataset to make sure it is in a format usable by
 %CPM
 
