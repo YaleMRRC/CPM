@@ -1,4 +1,4 @@
-function [y_test, y_predict]=cpm_cv(x,y,pthresh,kfolds)
+function [y_predict_reshape]=cpm_cv(x,y,pthresh,kfolds)
 % Runs cross validation for CPM
 % x            Predictor variable
 % y            Outcome variable
@@ -43,3 +43,5 @@ for leftout = 1:kfolds
     [y_predict(leftout,1:nsubs_in_fold)]=cpm_test(x_test,mdl,pmask);
 end
 
+y_test_reshape(randinds)=reshape(y_test',[],1);
+y_predict_reshape(randinds)=reshape(y_predict',[],1);

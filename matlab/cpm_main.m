@@ -50,10 +50,10 @@ clearvars p
 [x,y]=cpm_check_errors(x,y,kfolds);
 
 %% Train & test Connectome-Based Predictive Model
-[y_test,y_predict]=cpm_cv(x,y,pthresh,kfolds);
+[y_predict]=cpm_cv(x,y,pthresh,kfolds);
 
 %% Assess performance
-[performance(1),performance(2)]=corr(y_predict(:),y_test(:));
+[performance(1),performance(2)]=corr(y_predict(:),y(:));
 
 fprintf('\nDone.\n')
 
