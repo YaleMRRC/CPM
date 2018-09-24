@@ -21,7 +21,7 @@ addpath('localpath/CPM/matlab/')
 ```matlab
 [y_predict, performance] = cpm_main(x,y)
 ```
- This will run split half cross validation, and use a p threshold of 0.01 to select features. These 
+   This will run split half cross validation, and use a p threshold of 0.01 to select features. These 
 default values can be changed, for example: 
 ```matlab
 [y_predict, performance] = cpm_main(x,y,'pthresh',0.05,'kfolds',10)
@@ -29,4 +29,4 @@ default values can be changed, for example:
 
 For further questions please raise an issue [link](https://github.com/YaleMRRC/CPM/issues "here").
 
-[1] Shen, Xilin, et al. "Using connectome-based predictive modeling to predict individual behavior from brain connectivity." nature protocols 12.3 (2017): 506.
+[^1]: Shen, Xilin, et al. "Using connectome-based predictive modeling to predict individual behavior from brain connectivity." nature protocols 12.3 (2017): 506.
