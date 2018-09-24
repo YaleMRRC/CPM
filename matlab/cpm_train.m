@@ -1,20 +1,23 @@
 function [r,p,pmask,mdl]=cpm_train(x,y,pthresh)
-% call from cpm_cv
-% Train a model using CPM framework
-% Accepts the explanatory variable, "x", the target variable "y" and the
-% significance threshold "pthresh"
+% Train a Connectome-based Predictive Model
+% x            Predictor variable
+% y            Outcome variable
+% pthresh      p-value threshold for feature selection
+% r            Correlations between all x and y
+% p            p-value of correlations between x and y
+% pmask        Mask for significant features
+% mdl          Coefficient fits for linear model relating summary features to y
 
-% Feature selection from all train subs
+% Select significant features
 [r,p]=corr(x',y);
-% Binarized mask of features
 pmask=(+(r>0))-(+(r<0)); 
 pmask=pmask.*(+(p<pthresh));
 
-% Get summary features for each train sub
+% For each subject, summarize selected features 
 for i=1:size(x,2)
     summary_feature(i)=nanmean(x(pmask>0,i))-nanmean(x(pmask<0,i));
 end
 
-% Fit behavior to summary features
+% Fit y to summary features
 mdl=robustfit(summary_feature,y');    
     
