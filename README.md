@@ -1,7 +1,7 @@
 # Connectome-based Predictive Modelling
 
 <p align="center">
-	<img src ="images/cpm.png" width="450" height="420" />
+	<img src ="images/cpm.png" width="430" height="420" />
 </p>
 
 Connectome-based Predictive Modeling (CPM) is a data-driven protocol for developing predictive models of brain-behavior relationships from connectivity data using cross-validation. The protocol includes the following steps: 1) feature selection, 2) feature summarization, 3) model building, and 4) assessment of prediction significance.
