@@ -6,7 +6,7 @@
 
 Connectome-based Predictive Modeling (CPM) is a data-driven protocol for developing predictive models of brain-behavior relationships from connectivity data using cross-validation. The protocol includes the following steps: 1) feature selection, 2) feature summarization, 3) model building, and 4) assessment of prediction significance.
 
-In this repository are MATLAB scripts which can be used to carry out CPM. Currently the protocol resembles the methodology in Shen et al. [1]. More features and flexibility will be added in the near future. One can exectute the code via the following:
+In this repository are MATLAB scripts which can be used to carry out CPM. Currently the protocol resembles the methodology in Shen et al. [1], and Finn et al. [2]. More features and flexibility will be added in the near future. One can exectute the code via the following:
 1. Using the link in the top right corner of this page, download the repository as a zip, and unzip in the desired folder, or clone it to your local computer using the following command: 
 ```bash
 git clone https://github.com/YaleMRRC/CPM.git.
@@ -28,4 +28,5 @@ default values can be changed, for example:
 
 For further questions please raise an issue [here](https://github.com/YaleMRRC/CPM/issues).
 
-[1] Shen, Xilin, et al. "Using connectome-based predictive modeling to predict individual behavior from brain connectivity." nature protocols 12.3 (2017): 506.
+[1] Shen X., Finn E.S., Scheinost D., Rosenberg M.D., Chun M.M., Papademetris X., Constable R.T. "Using connectome-based predictive modeling to predict individual behavior from brain connectivity." nature protocols 12.3 (2017): 506.
+[2] Finn E.S., Shen X., Scheinost D., Rosenberg M.D., Huang J., Chun M.M., Papademetris X., Constable R.T., et al. "Functional connectome fingerprinting: identifying individuals using patterns of brain connectivity" nature neuroscience 18.11 (2015): 1664.
