@@ -28,6 +28,8 @@ default values can be changed, for example:
 
 For further questions please raise an issue [here](https://github.com/YaleMRRC/CPM/issues).
 
+### References
+
 [1] Shen X., Finn E.S., Scheinost D., Rosenberg M.D., Chun M.M., Papademetris X., Constable R.T. "Using connectome-based predictive modeling to predict individual behavior from brain connectivity.", Nature Protocols 12.3 (2017): 506.
 
 [2] Finn E.S., Shen X., Scheinost D., Rosenberg M.D., Huang J., Chun M.M., Papademetris X., Constable R.T., et al. "Functional connectome fingerprinting: identifying individuals using patterns of brain connectivity.", Nature Neuroscience 18.11 (2015): 1664.
