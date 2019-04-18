@@ -220,7 +220,7 @@ def kfold_cpm(X,y,k):
         else:
             testinds=randinds[si:]
 
-        traininds=~np.isin(randinds,testinds)
+        traininds=randinds[~np.isin(randinds,testinds)]
         
         trainmats=ipmats[:,traininds]
         trainpheno=pheno[traininds]
