@@ -6,13 +6,13 @@ to be easy to understand, capability of fast development, preventing duplicate c
 This framework has the following base classes:
 
 1. `subject`: each subject has ``` all_edges=K * 268*268``` of connectome where ```K``` is the number of tasks. We also keep the following members: ```num_node```, ```num_task```, and ```id```. 
-2. group: each consisting of ```N``` subjects. We usually keep group level properties in this class. 
-3. phenotype: has ```name``` and a list of behavioral measures which is named ```all_behav```.
-4. predictory: cpm is a predictory model. This is the reason we define two base models : one for predictory models and one for explanatory ones. 
+2. `group`: each consisting of ```N``` subjects. We usually keep group level properties in this class. 
+3. `phenotype`: has ```name``` and a list of behavioral measures which is named ```all_behav```.
+4. `predictory`: cpm is a predictory model. This is the reason we define two base models : one for predictory models and one for explanatory ones. 
 explanatory models don't have k-folds. There is a long history of literature on these models. Generally predictive models produce lower variance and relatively higher bias. 
-5. explanatory: this is designed for explanatory models without k-fold. In future versions of this framework, a number of models including but not limited to cca and manova
+5. `explanatory`: this is designed for explanatory models without k-fold. In future versions of this framework, a number of models including but not limited to cca and manova
 will inherit from this class. 
-6. rcpm: this is the main ridge cpm class with a ```run``` and ```evaluate``` function. 
+6. `rcpm`: this is the main ridge cpm class with a ```run``` and ```evaluate``` function. 
 
 ## How to Use
 To use ridge cpm (rCPM) you need to load your data in following way:
