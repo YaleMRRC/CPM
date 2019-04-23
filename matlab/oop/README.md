@@ -14,6 +14,7 @@ explanatory models don't have k-folds. There is a long history of literature on 
 will inherit from this class. 
 6. rcpm: this is the main ridge cpm class with a ```run``` and ```evaluate``` function. 
 
+## How to Use
 To use ridge cpm (rCPM) you need to load your data in following way:
 
 ```Matlab
