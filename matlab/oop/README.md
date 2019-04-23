@@ -1,0 +1,51 @@
+# Object Oriented ridge CPM
+
+This is object oriented design for connectome based predictive modeling (CPM) by Xilin Shen 2017. Main goal of this structure are
+to be easy to understand, capability of fast development, preventing duplicate code, and eliminating long lines of function parameters which are pretty common in Matlab.
+## Class Structure 
+This framework has the following base classes:
+
+1. subject: each subject has ``` all_edges=K * 268*268``` of connectome where ```K``` is the number of tasks. We also keep the following members: ```num_node```, ```num_task```, and ```id```. 
+2. group: each consisting of ```N``` subjects. We usually keep group level properties in this class. 
+3. phenotype: has ```name``` and a list of behavioral measures which is named ```all_behav```.
+4. predictory: cpm is a predictory model. This is the reason we define two base models : one for predictory models and one for explanatory ones. 
+explanatory models don't have k-folds. There is a long history of literature on these models. Generally predictive models produce lower variance and relatively higher bias. 
+5. explanatory: this is designed for explanatory models without k-fold. In future versions of this framework, a number of models including but not limited to cca and manova
+will inherit from this class. 
+6. rcpm: this is the main ridge cpm class with a ```run``` and ```evaluate``` function. 
+
+To use ridge cpm (rCPM) you need to load your data in following way:
+
+```Matlab
+    dataset = "hcp.50"; % LDA on UCLA + ages on 3 bins for HCP
+    x = load('../data.50/HCP900_rest_n50.mat');
+    y = load('../data.50/HCP900_PMAT24_A_CR_n50.mat');
+    x= x.HCP900_rest_n50; % makes sure x is 268*268*N
+    y=y.HCP900_PMAT24_A_CR_n50; % makes sure y is N*1
+    N = size(x,3);
+```
+Then you need to build a group of subjects. If you need to use mask (e.g., abi, nbs) you can add your own one in 
+```function this = subject(x,id,dataset,mask)``` in subject.m. Any group level functions can be placed here. 
+```Matlab
+    g = buildGroup(x,dataset,'none'); % mask=false, Bins
+```
+CPM needs a number of parameters and we are using Matlab's structures to this aim. ```diagnosis``` is useful when you have group labels.
+We initialize it with zero:
+```Matlab
+    options = [];
+    options.thresh=0.05;
+    options.seed = randi([1 10000]);
+    options.k = 2;
+    options.phenotype = phenotype('behav',y);
+    options.diagnosis = zeros(N,1);
+```
+
+Finally we need to get an instanciation of cpm and calling ```run()``` and then simply evaluate it. As you see, the constructor in ```rcpm``` only calls ```this = this@predictory(group,options);
+```. Other predictive models can include further private members. You can see that function ```run``` in ```predictory``` is ```Abstract```.
+This means that all classes that inherits ```predictory``` have to implement it locally.
+```Matlab
+    m = rcpm(g,options);
+    m.run();
+    m.evaluate();
+```
+
