@@ -5,7 +5,7 @@ to be easy to understand, capability of fast development, preventing duplicate c
 ## Class Structure 
 This framework has the following base classes:
 
-1. subject: each subject has ``` all_edges=K * 268*268``` of connectome where ```K``` is the number of tasks. We also keep the following members: ```num_node```, ```num_task```, and ```id```. 
+1. `subject`: each subject has ``` all_edges=K * 268*268``` of connectome where ```K``` is the number of tasks. We also keep the following members: ```num_node```, ```num_task```, and ```id```. 
 2. group: each consisting of ```N``` subjects. We usually keep group level properties in this class. 
 3. phenotype: has ```name``` and a list of behavioral measures which is named ```all_behav```.
 4. predictory: cpm is a predictory model. This is the reason we define two base models : one for predictory models and one for explanatory ones. 
@@ -25,7 +25,21 @@ To use ridge cpm (rCPM) you need to load your data in following way:
     y=y.HCP900_PMAT24_A_CR_n50; % makes sure y is N*1
     N = size(x,3);
 ```
-Then you need to build a group of subjects. If you need to use mask (e.g., abi, nbs) you can add your own one in 
+### Build Group
+Then you need to build a group of subjects. An example of this function is in ```main.m```: 
+
+```Matlab
+function g = buildGroup(x,dataset,mask)
+    N =size(x,3);
+    subjects(1,N) = subject(N);
+    for i=1:N
+        subjects(i) = subject(x(:,:,i,:),i,dataset,mask);
+    end
+    g = group(subjects);
+end
+```
+and you need to call this with appropriate dataset name and mask matrix over edges. 
+If you need to use mask (e.g., abi, nbs) you can add your own one in 
 ```function this = subject(x,id,dataset,mask)``` in subject.m. Any group level functions can be placed here. 
 ```Matlab
     g = buildGroup(x,dataset,'none'); % mask=false, Bins
