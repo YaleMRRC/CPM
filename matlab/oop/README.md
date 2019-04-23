@@ -1,7 +1,7 @@
 # Object Oriented ridge CPM
 
-This is object oriented design for connectome based predictive modeling (CPM) by Xilin Shen 2017. Main goal of this structure are
-to be easy to understand, capability of fast development, preventing duplicate code, and eliminating long lines of function parameters which are pretty common in Matlab.
+This is object oriented design for connectome based predictive modeling (CPM) by Xilin Shen 2017. Main goals of this structure are
+to be easy to understand for neuro scientists, capability of fast development, preventing duplicate codes, and eliminating long lines of function parameters which are pretty common in Matlab.
 ## Class Structure 
 This framework has the following base classes:
 
