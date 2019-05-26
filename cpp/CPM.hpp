@@ -22,10 +22,10 @@ class CPM{
         //                                   net, default is 1e-6 which makes the
         //                                   regression method to be ridge
         //                                   regression, v_alpha=1 makes it lasso. */
-        static int num_subj;
-        static int num_node;
-        static int num_task;
-        static int num_edges;
+        int num_subj;
+        int num_node;
+        int num_task;
+        int num_edges;
 	float threshold;
 	int k;
 	int seed;

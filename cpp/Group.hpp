@@ -29,6 +29,7 @@ class Group{
 		Group(Subject* subjects, group_options op);
 		Group();
 		double** getX();
+		int getSize();
 
 };
 #endif
