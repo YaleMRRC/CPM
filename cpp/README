@@ -1,9 +1,4 @@
-Sample test cases for PS4
+OOP CPM code in CPP
 -------------------------
 
-sample.consists of a sequence of commands.
-To run them, type the following to the shell:
-> sh -c sample.in > mysample.out
-
-Anything written to standard output will into the file sample.out.  Things
-written to standard error will come out on the console.
+To work with this framework you only need to run makefile.
