@@ -23,3 +23,6 @@ Group::Group(){
 double** Group::getX(){
 	return this->X;
 }
+int Group::getSize(){
+	return this->group_size;
+}

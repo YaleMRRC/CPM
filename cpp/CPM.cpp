@@ -12,6 +12,7 @@ CPM::CPM(Group group,double* phenotype,cpm_options op){
 	this->seed = op.seed;
 	this->lambda = op.lambda;
 	this->phenotype = phenotype;
+	this->num_subj = this->group.getSize();
 }
 
 /*
@@ -19,8 +20,14 @@ CPM::CPM(Group group,double* phenotype,cpm_options op){
  */
 void CPM::run(){
 	double ** X = this->group.getX();
+	double * y = this->phenotype;
+	cout<<this->num_subj<<endl;
+	/*for(int i=0;i<this->num_subj;i++){
+		cout<<i<<endl;
+	}*/
 }
 
 void CPM::evaluate(){
 }
+
 
