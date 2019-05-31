@@ -59,7 +59,7 @@ Finally we need to get an instanciation of cpm and calling ```run()``` and then 
 ```. Other predictive models can include further private members. You can see that function ```run``` in ```predictory``` is ```Abstract```.
 This means that all classes that inherits ```predictory``` have to implement it locally.
 ```Matlab
-    m = rcpm(g,options);
+    m = cpm(g,options);
     m.run();
     m.evaluate();
 ```
