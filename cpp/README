@@ -65,7 +65,8 @@ We initialize it with zero:
 Finally we need to get an instanciation of cpm and calling ```run()``` and then simply evaluate it. As you see, the constructor in ```rcpm``` only calls ```this = this@predictory(group,options);
 ```. Other predictive models can include further private members. You can see that function ```run``` in ```predictory``` is ```Abstract```.
 This means that all classes that inherits ```predictory``` have to implement it locally.
-```Matlab
+
+```C++
     CPM* c = new CPM(group,phenotype,opc);                                                       
     c->run();
     c->evaluate();
