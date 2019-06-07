@@ -18,7 +18,7 @@ classdef predictory < handle
         %
         r_rank; % cross-validated spearman correlation
         %                                   between predicted value with ground truth (all_behav)
-        y;% predicted value for all the subjects
+        Y;% predicted value for all the subjects
         coef_total; % regression coefficients of all the edges in all the k folds
         coef0_total;% regression intercept in all the k folds
         lambda_total; % penalty parameter chosen at each iteration
@@ -71,7 +71,7 @@ classdef predictory < handle
             this.coef0_total = zeros(1, this.k); % store all the intercept
             this.lambda_total = zeros(1, this.k); % store all the lambda
             this.all_edges = this.group.all_edges;
-            this.y = zeros(group.group_size,1);
+            this.Y = zeros(group.group_size,1);
         end
     end
     methods (Abstract)

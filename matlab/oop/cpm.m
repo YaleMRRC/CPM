@@ -1,7 +1,7 @@
 classdef cpm < predictory
     methods
-        function this = cpm(group,phenotype,options)
-            this = this@predictory(group,phenotype,options);
+        function this = cpm(group,options)
+            this = this@predictory(group,options);
         end
         function run(this)
             rng(this.seed);
@@ -31,9 +31,9 @@ classdef cpm < predictory
             end
         end
         function evaluate(this)
-            [this.r_pearson, ~] = corr(this.Y, this.phenotype.pca_behav);
-            [this.r_rank, ~] = corr(this.Y, this.phenotype.pca_behav, 'type', 'spearman');
-            this.mse = sum((this.Y - this.phenotype.pca_behav).^2) / this.num_sub_total;
+            [this.r_pearson, ~] = corr(this.Y, this.phenotype.all_behav);
+            [this.r_rank, ~] = corr(this.Y, this.phenotype.all_behav, 'type', 'spearman');
+            this.mse = sum((this.Y - this.phenotype.all_behav).^2) / this.num_sub_total;
             this.q_s = 1 - this.mse / var(this.Y, 1);
             fprintf('q_s=%f\n',this.q_s);
         end
