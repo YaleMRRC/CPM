@@ -80,7 +80,7 @@ In order to make comparisions fast, we can compute inverse of beta distribution 
      }
 ```
 
-In the `CPM.cpp` code:
+In the `CPM.cpp` code when we do comparision, we only need to compare `c` values with corrosponding value of the threshold. if `beta(x,a,b)<eta` for `lower` and `1-beta(x,b,a)<eta` for `upper`:
 ```cpp
       double t1 = xinbta ( b, a, beta_log, this->threshold, ifault );                               
       double t2 = xinbta ( a, b, beta_log, 1.0-this->threshold, ifault ); 
