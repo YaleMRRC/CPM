@@ -1,5 +1,5 @@
-#ifndef CPM_H
-#define CPM_H
+#ifndef RCPM_H
+#define RCPM_H
 #include "Group.hpp"
 #include "predictory.hpp"
 
@@ -23,7 +23,7 @@
  * Simulator is a class to simulate the CPM Problem
  *
  */
-class CPM: public predictory{
+class RCPM: public predictory{
 	public:
 		/* constructs
 		 * a simulator for numAgents agents. The first numOne of 
@@ -32,18 +32,13 @@ class CPM: public predictory{
 		 * itialize the random number
 		 * generator random().
 		 * */
-		CPM(Group group,double* phenotype, cpm_options op);
+		RCPM(Group group,double* phenotype, cpm_options op);
 		/*
 		 * runs the simulation for as many rounds as it takesto reach
 		 * consensus. The number of communication rounds used is stored in th
 		 * output parameter rounds. The consensus value is returned
 		 *
-		 */		
+		 */
 		void run();
-		int polyfit(const double* const dependentValues,
-				const double* const independentValues,
-				unsigned int        countOfElements,
-				unsigned int        order,
-				double*             coefficients);
 };
 #endif

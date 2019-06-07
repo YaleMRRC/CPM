@@ -8,11 +8,6 @@
  */
 class Subject{
 	private:
-		int group_size;
-		int num_node;
-		static int num_task;
-		static int num_edges;
-		int all_edges;
 		double* x; 
 	public:
 		/*

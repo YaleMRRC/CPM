@@ -21,15 +21,16 @@ class Group{
 		int num_node;
 		int num_task;
 		int num_edges;
-		double** X;
+		double* X;
 	public:
 		/*
 		 * construct an agent object
 		 */
 		Group(Subject* subjects, group_options op);
 		Group();
-		double** getX();
+		double* getX();
 		int getSize();
+		int getNumEdges();
 
 };
 #endif
