@@ -15,14 +15,14 @@ explanatory models don't have k-folds. There is a long history of literature on 
 ## How to Use
 To use ridge cpm (rCPM) you need to load your data in following way:
 
-```C++
+```cpp
    make -f Makefile
    ./cpm
 ```
 ### Build Group
 Then you need to build a group of subjects. An example of this function is in ```main.m```: 
 
-```C++
+```cpp
 Group buildGroup(double* phenotype,const group_options opg){                                         
         
         Subject subjects[opg.num_subj];
@@ -48,7 +48,7 @@ If you need to use mask (e.g., abi, nbs) you can add your own one in
 ```
 CPM needs a number of parameters and we are using Matlab's structures to this aim. ```diagnosis``` is useful when you have group labels.
 We initialize it with zero:
-```C++
+```cpp
     cpm_options opc = {};
     group_options opg = {};                                                                      
     opc.threshold = 0.01;                                                                        
@@ -66,7 +66,7 @@ Finally we need to get an instanciation of cpm and calling ```run()``` and then 
 ```. Other predictive models can include further private members. You can see that function ```run``` in ```predictory``` is ```Abstract```.
 This means that all classes that inherits ```predictory``` have to implement it locally.
 
-```C++
+```cpp
     CPM* c = new CPM(group,phenotype,opc);                                                       
     c->run();
     c->evaluate();
