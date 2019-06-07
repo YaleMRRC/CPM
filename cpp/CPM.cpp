@@ -18,6 +18,7 @@ void CPM::run(){
 	double * y = this->phenotype;
 	int n = this->num_subj;
 	int p = this->num_edges;
+	double MIN =0.1E-05;
 	int order =1;
 	int k=this->k;
 	double a=0.5,b=(int)((double)(k-1.0)/(k)*n/2-1);//%(n-2)/2.0,xth,fx;
@@ -161,6 +162,8 @@ void CPM::run(){
 		for(int i=0;i<n;i++){
 			if(indices[i]==fold){
 				this->predicted[i]=test_sum[testInd]*coefficients[1]+coefficients[0];
+				if(this->predicted[i]<MIN)
+					this->predicted[i] = 0.0;
 				cout<<"predicted:"<<this->predicted[i]<<endl;
 				testInd++;
 			}

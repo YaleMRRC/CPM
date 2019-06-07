@@ -87,13 +87,13 @@ CORDAT predictory::corr(double* x,double* y,int n,int p1,int p2){
 		//int ifault;
 		
 		//double incb = xinbta(a,b,beta_log,pval,ifault);//this->InverseBeta(1.0-pval,a,b,-10,10);
-		cout<<" lower[i]: "<<lower[i]<<" c:"<<pval[i]<<" t[i]"<<t[i]<<" coef[i]"<<coef[i]<<" dx[i]:"<<dx[i]<<endl;
+		//cout<<" lower[i]: "<<lower[i]<<" c:"<<pval[i]<<" t[i]"<<t[i]<<" coef[i]"<<coef[i]<<" dx[i]:"<<dx[i]<<endl;
 		/*//double incb = this->InverseBeta(1.0-pval,a,b,-10,10);
 		double tinv = pow(incb*n/(1.0-incb),0.5);	
 		//cout<<"a:"<<a<<" b:"<<b<<" coef[i]:"<<coef[i]<<" t[i]:"<<t[i]<<" "<<" pval[i]:"<<pval<<" invBeta:"<<tinv<<endl;
 		cout<<"incb:"<<incb<< " t[i]"<<t[i]<<" tinv:"<<tinv<<" c_upper:"endl;
 		*/
-		cin>>a;
+		//cin>>a;
 	}
 
 	CORDAT c ={coef,pval,lower};
