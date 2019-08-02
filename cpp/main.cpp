@@ -5,12 +5,10 @@
 #include <algorithm>
 using namespace std;
 void run(); // main function
+Group buildGroup(double* phenotype,const group_options opg);
 /*
  *  aurhor: Javid Dadashkarimi
- *  netid: jd2392
- *  Homework: 4
- *  Topic: Consensus
- *  numb of classes: 2 [Simulator, Agent]
+ *  BioImageSuit Web
  */
 int main(int argc, char *argv[]){
 	banner();
@@ -23,33 +21,51 @@ void run(){ // main function
 	cpm_options opc = {};
 	group_options opg = {};
 	opc.threshold = 0.01;
-	opc.k=3;
+	opc.k=10;
 	opc.seed=870;
 	opc.lambda = 0.0001;
-	
+
 	opg.num_task = 0;
 	opg.num_node = 268;
-	opg.num_edges = 5;//268*268;
-	opg.num_subj = 10;
-	
-	Subject subjects[opg.num_subj];
+	opg.num_edges = 268*267/2;
+	opg.num_subj = 50;
+
 	double phenotype[opg.num_subj];
-	//double* x = new double[num_subj*num_edges]; 
+	Group group = buildGroup(phenotype,opg);
 
+	CPM* c = new CPM(group,phenotype,opc); 
+	c->run();
+	c->evaluate();
+}
+
+Group buildGroup(double* phenotype,const group_options opg){
+	ifstream inFile1;
+	ifstream inFile2;
+	inFile1.open("phenotype.txt");
+	inFile2.open("connectome.txt");
+
+	Subject subjects[opg.num_subj];
 	for(int i=0;i<opg.num_subj;i++){
-		phenotype[i] = (rand() % static_cast<int>(20 + 1));
+		//phenfile<< (rand() % static_cast<int>(20 + 1))<<endl;
+		string y;
+		inFile1>>y;
+		//cout<<(rand() % static_cast<int>(20 + 1))<<" ";
+		phenotype[i]=stoi(y);//(rand() % static_cast<int>(20 + 1));
 	}
-
 	for(int i=0;i<opg.num_subj;i++){
 		double* xi = new double[opg.num_edges]; 
 		for(int j=0;j<opg.num_edges;j++){
-			xi[j] =(rand() % static_cast<int>(4 + 1));
+			//myfile<<(rand() % static_cast<int>(4 + 1))<<" ";
+			string edge;
+			inFile2>>edge;
+			//cout<<i<<" "<<j<<" "<<edge<<endl;
+			xi[j]=stod(edge);//(rand() % static_cast<int>(4 + 1));
+			//cout<<xi[j]<<endl;
 		}	
 		subjects[i].setConnectome(xi);
 	}
+	inFile1.close();
+	inFile2.close();
 
-	Group group(subjects,opg);
-	CPM* c = new CPM(group,phenotype,opc); 
-	c->run();
-	//c->evaluate();
+	return Group(subjects,opg);
 }

@@ -27,6 +27,21 @@ predictory::predictory(Group group,double* phenotype,cpm_options op){
 }
 
 void predictory::evaluate(){
+	cout<<"#########predicted############"<<endl;
+	double mse = 0.0;
+	double spcorr = 0.0;
+	vector<double> y;
+	vector<double> yhat;
+	for(int i=0;i<this->num_subj;i++){
+		y.push_back(this->phenotype[i]);
+		yhat.push_back(this->predicted[i]);
+		//cout<<this->predicted[i]<<endl;
+		mse += pow(this->phenotype[i]-this->predicted[i],2);
+	}
+	mse /=this->num_subj;
+	spcorr = this->spearman(y,yhat);
+	cout<<"**** MSE="<<mse<<" *** "<<endl;
+	cout<<"**** SPEARMAN="<<spcorr<<" *** "<<endl;
 }
 
 CORDAT predictory::corr(double* x,double* y,int n,int p1,int p2){
@@ -65,35 +80,16 @@ CORDAT predictory::corr(double* x,double* y,int n,int p1,int p2){
 	bool* lower = new bool[p1];
 	for(int i=0;i<p1;i++){
 		t[i] = coef[i]*pow((double)(n-2.0)/(1.0-pow(coef[i],2)),0.5);
-		double a = 0.5,b = (n-2.0)/2.0;
+		//double a = 0.5,b = (n-2.0)/2.0;
 		double c_upper = (double)pow(t[i],2)/(pow(t[i],2)+n);
 		double c_lower = (double)(n-2.0)/(pow(t[i],2)+n-2.0);
 		if(n>pow(t[i],2)+2){
-			cout<<"a: "<<a<<" b:"<<b<<endl;
-			pval[i] = 1.0-this->incbeta(a,b,c_upper);
-			pval[i] =c_upper;
+			pval[i] =c_upper;//pval[i] = 1.0-this->incbeta(a,b,c_upper);
 			lower[i]=false;
 		}else{
-			cout<<"b: "<<a<<" a:"<<b<<endl;
-			pval[i] = this->incbeta(b,a,c_lower);
-			pval[i] =c_lower;
+			pval[i] =c_lower; //pval[i] = this->incbeta(b,a,c_lower);
 			lower[i]=true;
 		}
-
-		//double beta_log = lgamma ( a )
-		//	+ lgamma ( b )
-		//	- lgamma ( a + b );
-
-		//int ifault;
-		
-		//double incb = xinbta(a,b,beta_log,pval,ifault);//this->InverseBeta(1.0-pval,a,b,-10,10);
-		//cout<<" lower[i]: "<<lower[i]<<" c:"<<pval[i]<<" t[i]"<<t[i]<<" coef[i]"<<coef[i]<<" dx[i]:"<<dx[i]<<endl;
-		/*//double incb = this->InverseBeta(1.0-pval,a,b,-10,10);
-		double tinv = pow(incb*n/(1.0-incb),0.5);	
-		//cout<<"a:"<<a<<" b:"<<b<<" coef[i]:"<<coef[i]<<" t[i]:"<<t[i]<<" "<<" pval[i]:"<<pval<<" invBeta:"<<tinv<<endl;
-		cout<<"incb:"<<incb<< " t[i]"<<t[i]<<" tinv:"<<tinv<<" c_upper:"endl;
-		*/
-		//cin>>a;
 	}
 
 	CORDAT c ={coef,pval,lower};
