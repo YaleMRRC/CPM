@@ -39,7 +39,7 @@ classdef rcpm < predictory
                 
                 % run model on TEST sub with the best lambda parameter
                 test.x = all_edges(:, test.indx);
-                this.y(test.indx) = test.x(edges_1, :)'*coef+coef0;
+                this.Y(test.indx) = test.x(edges_1, :)'*coef+coef0;
                 
                 this.coef_total(edges_1, i_fold) = coef;
                 this.coef0_total(:, i_fold) = coef0;
@@ -48,9 +48,9 @@ classdef rcpm < predictory
         
         function evaluate(this)
             % compare predicted and observed behaviors
-            [r_pearson, ~] = corr(this.y, this.phenotype.all_behav);
-            [r_rank, ~] = corr(this.y, this.phenotype.all_behav, 'type', 'spearman');
-            mse = sum((this.y - this.phenotype.all_behav).^2) / this.group.group_size;
+            [r_pearson, ~] = corr(this.Y, this.phenotype.all_behav);
+            [r_rank, ~] = corr(this.Y, this.phenotype.all_behav, 'type', 'spearman');
+            mse = sum((this.Y - this.phenotype.all_behav).^2) / this.group.group_size;
             q_s = 1 - mse / var(this.phenotype.all_behav, 1);
             fprintf('mse=%f\n',mse);
             fprintf('r_pearson=%f\n',r_pearson);
