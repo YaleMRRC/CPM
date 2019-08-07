@@ -28,6 +28,7 @@ classdef predictory < handle
         num_edge;
         all_edges;
         output;
+        mse;
     end
     methods
         function this = predictory(group,options)
