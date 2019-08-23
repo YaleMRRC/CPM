@@ -73,6 +73,12 @@ classdef predictory < handle
             this.lambda_total = zeros(1, this.k); % store all the lambda
             this.all_edges = this.group.all_edges;
             this.Y = zeros(group.group_size,1);
+            if options.taskID
+                this.all_edges = squeeze(this.all_edges(:,:,taskID));
+            else
+                 xp = permute(this.all_edges,[1 3 2]);
+                 this.all_edges = reshape(xp,[],this.num_sub_total);
+            end
         end
     end
     methods (Abstract)
