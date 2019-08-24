@@ -36,6 +36,8 @@ classdef cpm < predictory
             this.mse = sum((this.Y - this.phenotype.all_behav).^2) / this.num_sub_total;
             this.q_s = 1 - this.mse / var(this.Y, 1);
             fprintf('q_s=%f\n',this.q_s);
+            fprintf('spearman=%f\n',this.r_rank);
+            fprintf('mse=%f\n',this.mse);
         end
     end
 end
