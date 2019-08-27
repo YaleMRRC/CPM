@@ -37,6 +37,25 @@ classdef subject < handle
                 end
            
                 this.issym = issymmetric(x(:, :, 1, 1));
+                if(contains(dataset, "pnc"))
+                    missing_nodes = [60, 100, 108, 109, 112, 115,116, 118, 129, 189, ...
+                        202, 239, 240, 242, 243, 249, 250, 266];
+                    temp=zeros(268,268,1,size(x,4));
+                    for j=1:size(x,4)
+                        dynamic = x(:,:,1,j); % wm mask
+                        for i=missing_nodes
+                            b1 = zeros(1,size(dynamic,1));
+                            b2 = zeros(size(dynamic,1)+1,1);
+                            dynamic = [dynamic(1:i,:); b1; dynamic(i+1:end,:)];
+                            dynamic = [dynamic(:,1:i) b2 dynamic(:,i+1:end)];
+                        end
+                        temp(:,:,1,j) = dynamic;
+                    end % now we have 268*268
+                    x=temp;
+                    this.dim = size(x(:,:,1));
+%                     this.gender = gender;
+%                     this.age = age;
+                end
                 if(mask=="abi")
                     missing_nodes = [60, 100, 108, 109, 112, 115,116, 118, 129, 189, ...
                         202, 239, 240, 242, 243, 249, 250, 266];
