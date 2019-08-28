@@ -64,3 +64,19 @@ This means that all classes that inherits ```predictory``` have to implement it 
     m.evaluate();
 ```
 
+## Cross Dataset
+
+Cross dataaset evaluation is also included in our pipeline. All you need is to build two groups: ```g1``` and ```g2``` and specify the model for predict (e.g., ```options.model="cpm"```).
+
+```Matlab
+    options = [];
+    options.thresh=0.05;
+    options.seed = randi([1 10000]);
+    options.k = 2;
+    options.model="cpm"; % options: cpm, rcpm
+    options.phenotype1 = phenotype('behav',y1);
+    options.phenotype2 = phenotype('behav',y2);
+    m = cross(g1,g2,options); % first: train, second: test
+    m.run();
+    m.evaluate();
+```
