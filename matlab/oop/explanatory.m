@@ -25,7 +25,7 @@ classdef explanatory
         function this = explanatory(group,options)
             %EXPLANATORY Construct an instance of this class
             %   Detailed explanation goes here
-            this.phenotypes = options.phenotypes;
+            this.phenotypes = options.phenotype;
             this.diagnosis = options.diagnosis;
             this.group = group;
             

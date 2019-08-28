@@ -9,21 +9,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [results] = main()
-%     data = csvread('../data/gender.csv');
-    dataset = "hcp.50"; % LDA on UCLA + ages on 3 bins for HCP
-    x = load('../data.50/HCP900_rest_n50.mat');
-    y = load('../data.50/HCP900_PMAT24_A_CR_n50.mat');
-    x= x.HCP900_rest_n50; % makes sure x is 268*268*N
-    y=y.HCP900_PMAT24_A_CR_n50; % makes sure y is N*1
-    N = size(x,3);
+    dataset = "hcp.175"; % LDA on UCLA + ages on 3 bins for HCP
+    x = rand(268,268,175,6);%load('all_mats.mat');
+    y = randi(30,175,1);%load('IQ.mat');
     g = buildGroup(x,dataset,'none'); % mask=false, Bins
     options = [];
     options.thresh=0.05;
     options.seed = randi([1 10000]);
     options.k = 2;
     options.phenotype = phenotype('behav',y);
-    options.diagnosis = zeros(N,1);
-    m = rcpm(g,options);
+    options.diagnosis = randi(2,175,1);
+    m = manova(g,options);
     m.run();
     m.evaluate();
 end

@@ -14,7 +14,6 @@ classdef group
     methods
         function this = group(subjects)
             this.subjects = subjects;
-%             this.phenotypes = phenotypes;
             this.group_size = size(subjects,2);
             this.num_node = subjects(1).num_node;
             this.num_edge = subjects(1).num_edge;
