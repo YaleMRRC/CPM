@@ -1,4 +1,4 @@
-function [y_predict_reshape]=cpm_cv(x,y,pthresh,kfolds)
+function [y_predict]=cpm_cv(x,y,pthresh,kfolds)
 % Runs cross validation for CPM
 % x            Predictor variable
 % y            Outcome variable
@@ -9,10 +9,10 @@ function [y_predict_reshape]=cpm_cv(x,y,pthresh,kfolds)
 
 % Split data
 nsubs=size(x,2);
-nfeats=size(x,1);
 randinds=randperm(nsubs);
 ksample=floor(nsubs/kfolds);
 
+y_predict = zeros(nsubs, 1);
 % Run CPM over all folds
 fprintf('\n# Running over %1.0f Folds.\nPerforming fold no. ',kfolds);
 for leftout = 1:kfolds
@@ -28,20 +28,15 @@ for leftout = 1:kfolds
         testinds=randinds(si:fi);
         traininds=setdiff(randinds,testinds);
     end
-    nsubs_in_fold=length(testinds);
     
     % Assign x and y data to train and test groups 
     x_train = x(:,traininds);
     y_train = y(traininds);
     x_test = x(:,testinds);
-    y_test(leftout,1:nsubs_in_fold) = y(testinds);
     
     % Train Connectome-based Predictive Model
-    [r,p,pmask,mdl] = cpm_train(x_train, y_train,pthresh);
+    [~, ~, pmask, mdl] = cpm_train(x_train, y_train,pthresh);
     
     % Test Connectome-based Predictive Model
-    [y_predict(leftout,1:nsubs_in_fold)]=cpm_test(x_test,mdl,pmask);
+    [y_predict(testinds)] = cpm_test(x_test,mdl,pmask);
 end
-
-y_test_reshape(randinds)=reshape(y_test',[],1);
-y_predict_reshape(randinds)=reshape(y_predict',[],1);
