@@ -19,7 +19,7 @@ function [results] = main()
     options.k = 2;
     options.phenotype = phenotype('behav',y);
     options.diagnosis = randi(2,175,1);
-    m = manova(g,options);
+    m = cpm(g,options);
     m.run();
     m.evaluate();
 end
