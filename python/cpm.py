@@ -24,7 +24,7 @@ def read_mats(fn_list):
     return fn_mats
 
 
-def train_cpm(fn_mats, pheno):
+def train_cpm(ipmat, pheno):
 
     """
     Accepts input matrices and pheno data
@@ -40,7 +40,7 @@ def train_cpm(fn_mats, pheno):
               correlation with behavioral measures
     """
 
-    cc=[stats.pearsonr(pheno,im) for im in fn_mats]
+    cc=[stats.pearsonr(pheno,im) for im in ipmat]
     rmat=np.array([c[0] for c in cc])
     pmat=np.array([c[1] for c in cc])
     rmat=np.reshape(rmat,[268,268])
@@ -68,32 +68,71 @@ def train_cpm(fn_mats, pheno):
     return fit_pos,fit_neg,posedges,negedges
 
 
-def pairwise_corr(X,Y):
+def kfold_cpm(X,y,k):
     """
-    Accepts ...
-    Returns ...
+    Accepts input matrices and pheno data
+    Returns model
+    @author: David O'Connor
+    @documentation: Javid Dadashkarimi
+    X: is the input matrix in v*v*n which v is number of nodes and n is the number of subjects 
+    y: is the gold data which is fluid intelligence
+    k: is the size of folds in k-fold
     """
 
-    #A=A.astype('float64')
+    numsubs = X.shape[1]
+    randinds=np.arange(0,numsubs)
+    random.shuffle(randinds)
 
-    n=X.shape[0]
-    
-    xbar=X.mean(1)
-    ybar=Y.mean(1)
+    samplesize=int(np.floor(float(numsubs)/k))
 
-    xminusxbar=X-np.vstack(xbar)
-    yminusybar=Y-np.vstack(ybar)
+    behav_pred_pos=np.zeros([k,samplesize])
+    behav_pred_neg=np.zeros([k,samplesize])
 
-    xminusxbarsquare=xminusxbar**2
-    yminusybarsquare=yminusybar**2
+    behav_actual=np.zeros([k,samplesize])
 
-    numer=np.dot(xminusxbar.T,yminusybar)
-    denom=np.vstack(np.sqrt(xminusxbarsquare.sum(1))*np.sqrt(yminusybarsquare.sum(1)))
-
-    return numer/denom
+    for fold in range(0,k):
+        print("Running fold:",fold+1)
+        si=fold*samplesize
+        fi=(fold+1)*samplesize
 
 
-def run_validate(X,y,cv_type):
+        if fold != k-1:
+            testinds=randinds[si:fi]
+        else:
+            testinds=randinds[si:]
+
+        traininds=randinds[~np.isin(randinds,testinds)]
+        
+        trainmats=X[:,traininds]
+        trainpheno=y[traininds]
+ 
+        testmats=X[:,testinds]
+        testpheno=y[testinds]
+
+        behav_actual[fold,:]=testpheno
+
+
+        pos_fit,neg_fit,posedges,negedges=train_cpm(trainmats,trainpheno)
+
+        pe=np.sum(testmats[posedges.flatten().astype(bool),:], axis=0)/2
+        ne=np.sum(testmats[negedges.flatten().astype(bool),:], axis=0)/2
+
+
+        if len(pos_fit) > 0:
+            behav_pred_pos[fold,:]=pos_fit[0]*pe + pos_fit[1]
+        else:
+            behav_pred_pos[fold,:]='nan'
+
+        if len(neg_fit) > 0:
+            behav_pred_neg[fold,:]=neg_fit[0]*ne + neg_fit[1]
+        else:
+            behav_pred_neg[fold,:]='nan'
+
+    return behav_pred_pos,behav_pred_neg,behav_actual
+
+
+
+def run_validate(X,y,cvtype):
     
     
     """
@@ -105,8 +144,8 @@ def run_validate(X,y,cv_type):
     1) LOO: leave-one-out cross-validation
     2) 5k: 
     """
-    num_subs=X.shape[2]
-    X=np.reshape(X,[-1,num_subs])
+    numsubs=X.shape[2]
+    X=np.reshape(X,[-1,numsubs])
 
     
     if cvtype == 'LOO':
@@ -116,11 +155,11 @@ def run_validate(X,y,cv_type):
 
             print("Running LOO, sub no:",loo)
       
-            train_mats=np.delete(ipmats,[loo],axis=1)
+            train_mats=np.delete(X,[loo],axis=1)
             train_pheno=np.delete(pheno,[loo],axis=0)
             
-            test_mat=ipmats[:,loo]
-            test_pheno=pheno[loo]
+            test_mat=X[:,loo]
+            test_pheno=y[loo]
 
             pos_fit,neg_fit,posedges,negedges=train_cpm(train_mats,train_pheno)
 
@@ -145,7 +184,7 @@ def run_validate(X,y,cv_type):
 
 
     elif cvtype == '5k':
-        bp,bn,ba=kfold_cpm(ipmats,pheno,numsubs,5)
+        bp,bn,ba=kfold_cpm(X,y,5)
 
 
 
@@ -158,7 +197,7 @@ def run_validate(X,y,cv_type):
 
 
     elif cvtype == '10k':
-        bp,bn,ba=kfold_cpm(ipmats,pheno,numsubs,10)
+        bp,bn,ba=kfold_cpm(X,y,10)
 
 
         ccp=np.array([stats.pearsonr(bp[i,:],ba[i,:]) for i in range(0,10)])
@@ -170,7 +209,7 @@ def run_validate(X,y,cv_type):
 
 
     elif cvtype == 'splithalf':
-        bp,bn,ba=kfold_cpm(ipmats,pheno,numsubs,2)
+        bp,bn,ba=kfold_cpm(X,y,2)
 
         ccp=np.array([stats.pearsonr(bp[i,:],ba[i,:]) for i in range(0,2)])
         Rpos_mean=ccp.mean(axis=0)[0]
@@ -185,69 +224,6 @@ def run_validate(X,y,cv_type):
 
     return Rpos_mean,Rneg_mean
     
-
-
-def kfold_cpm(X,y,k):
-    """
-    Accepts input matrices and pheno data
-    Returns model
-    @author: David O'Connor
-    @documentation: Javid Dadashkarimi
-    X: is the input matrix in v*v*n which v is number of nodes and n is the number of subjects 
-    y: is the gold data which is fluid intelligence
-    k: is the size of folds in k-fold
-    """
-
-    numsubs = X.shape[2]
-    randinds=np.arange(0,numsubs)
-    random.shuffle(randinds)
-
-    samplesize=int(np.floor(float(numsubs)/k))
-
-    behav_pred_pos=np.zeros([k,samplesize])
-    behav_pred_neg=np.zeros([k,samplesize])
-
-    behav_actual=np.zeros([k,samplesize])
-
-    for fold in range(0,k):
-        print("Running fold:",fold+1)
-        si=fold*samplesize
-        fi=(fold+1)*samplesize
-
-
-        if fold != k-1:
-            testinds=randinds[si:fi]
-        else:
-            testinds=randinds[si:]
-
-        traininds=randinds[~np.isin(randinds,testinds)]
-        
-        trainmats=ipmats[:,traininds]
-        trainpheno=pheno[traininds]
- 
-        testmats=ipmats[:,testinds]
-        testpheno=pheno[testinds]
-
-        behav_actual[fold,:]=testpheno
-
-
-        pos_fit,neg_fit,posedges,negedges=train_cpm(trainmats,trainpheno)
-
-        pe=np.sum(testmats[posedges.flatten().astype(bool),:], axis=0)/2
-        ne=np.sum(testmats[negedges.flatten().astype(bool),:], axis=0)/2
-
-
-        if len(pos_fit) > 0:
-            behav_pred_pos[fold,:]=pos_fit[0]*pe + pos_fit[1]
-        else:
-            behav_pred_pos[fold,:]='nan'
-
-        if len(neg_fit) > 0:
-            behav_pred_neg[fold,:]=neg_fit[0]*ne + neg_fit[1]
-        else:
-            behav_pred_neg[fold,:]='nan'
-
-    return behav_pred_pos,behav_pred_neg,behav_actual
 
 
 def sample_500(X,y,cv_type):
