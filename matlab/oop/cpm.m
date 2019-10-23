@@ -25,7 +25,7 @@ classdef cpm < predictory
                 fit_train = polyfit(train_sum, train.y, 1);
                 
                 % run model on TEST sub
-                test_sum = sum(test.x(edges_pos, :), 1) - sum(test.x(edges_neg), 1);
+                test_sum = sum(test.x(edges_pos, :), 1) - sum(test.x(edges_neg, :), 1);
                 
                 this.Y(test.indx) = (test_sum*fit_train(1)+fit_train(2))';
             end
