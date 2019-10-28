@@ -14,9 +14,13 @@ classdef cpm < predictory
                 train.x = this.all_edges(:,train.indx);
                 test.y = this.phenotype.all_behav(indices.test(i_fold),:);
                 train.y = this.phenotype.all_behav(indices.training(i_fold),:);
-                
                 % first step univariate edge selection
-                [edge_corr, edge_p] = corr(train.x', train.y);
+                if size(this.control,1)== size(this.phenotype.all_behav, 1)
+                    train.control = this.control(indices.training(i_fold),:);
+                    [edge_corr, edge_p] = partialcorr(train.x', train.y, train.control);
+                else
+                    [edge_corr, edge_p] = corr(train.x', train.y);
+                end
                 edges_pos = (edge_p < this.thresh) & (edge_corr > 0);
                 edges_neg = (edge_p < this.thresh) & (edge_corr < 0);
                 
@@ -25,7 +29,7 @@ classdef cpm < predictory
                 fit_train = polyfit(train_sum, train.y, 1);
                 
                 % run model on TEST sub
-                test_sum = sum(test.x(edges_pos, :), 1) - sum(test.x(edges_neg, :), 1);
+                test_sum = sum(test.x(edges_pos, :), 1) - sum(test.x(edges_neg), 1);
                 
                 this.Y(test.indx) = (test_sum*fit_train(1)+fit_train(2))';
             end
