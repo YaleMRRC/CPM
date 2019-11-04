@@ -22,7 +22,12 @@ classdef rcpm < predictory
                 train.y = this.phenotype.all_behav(indices.training(i_fold),:);
                 
                 % first step univariate edge selection
-                [~, edge_p] = corr(train.x', train.y);
+                if size(this.control,1)
+                    [edge_corr, edge_p] = partialcorr(train.x', train.y, train.control);
+                else
+                    [~, edge_p] = corr(train.x', train.y);
+                end
+                
                 edges_1 = find(edge_p < this.thresh);
                 
                 % build model on TRAIN subs
