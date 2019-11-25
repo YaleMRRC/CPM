@@ -72,9 +72,10 @@ def kfold_cpm(X,y,k):
     """
     Accepts input matrices and pheno data
     Returns model
+    Use "run_validate" instead
     @author: David O'Connor
     @documentation: Javid Dadashkarimi
-    X: is the input matrix in v*v*n which v is number of nodes and n is the number of subjects 
+    X: is the input matrix in v*n which v is number of nodes and n is the number of subjects 
     y: is the gold data which is fluid intelligence
     k: is the size of folds in k-fold
     """
