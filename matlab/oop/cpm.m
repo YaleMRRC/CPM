@@ -5,6 +5,10 @@ classdef cpm < predictory
         end
         function run(this)
             rng(this.seed);
+            all_edges = this.group.all_edges;
+            all_edges = permute(all_edges, [1, 3, 2]);
+            all_edges = reshape(all_edges, [],this.num_sub_total);
+            
             indices = cvpartition(this.num_sub_total,'k',this.k);
             for i_fold = 1 : this.k
                 fprintf('%dth fold\n', i_fold);
