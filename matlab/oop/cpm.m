@@ -10,8 +10,8 @@ classdef cpm < predictory
                 fprintf('%dth fold\n', i_fold);
                 test.indx = indices.test(i_fold);
                 train.indx = indices.training(i_fold);
-                test.x = this.all_edges(:,test.indx);
-                train.x = this.all_edges(:,train.indx);
+                test.x = all_edges(:,test.indx);
+                train.x = all_edges(:,train.indx);
                 test.y = this.phenotype.all_behav(indices.test(i_fold),:);
                 train.y = this.phenotype.all_behav(indices.training(i_fold),:);
                 % first step univariate edge selection
