@@ -63,6 +63,32 @@ This means that all classes that inherits ```predictory``` have to implement it 
     m.run();
     m.evaluate();
 ```
+## Example (manova)
+As an example lets take a look at multivariate analysis of variance (MANOVA):
+
+```
+    dataset = "hcp.515"; % LDA on UCLA + ages on 3 bins for HCP
+    x = load('../data.515/all_mats.mat');
+    y = load('../data.515/all_behav.mat');
+    x=x.all_mats;
+    y=y.all_behav;
+    g = buildGroup(x,dataset,'none'); % mask=false, Bins
+    options = [];
+    options.thresh=0.05;
+    options.seed = randi([1 10000]);
+    options.k = 10;
+    options.phenotype = phenotype('behav',y);
+    options.diagnosis = randi(2,175,1);
+    options.control=0;
+    options.taskID=0;
+    options.motion = rand(175,1);
+    options.phenotypes= y;
+    m = manova(g,options);
+    m.run();
+    m.evaluate();
+```
+
+Then in ```manova.m``` under ```run``` function you can see the set of significan edges in ```this.pval(:,1)```.
 
 ## Cross Dataset
 
