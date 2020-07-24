@@ -81,7 +81,7 @@ As an example lets take a look at multivariate analysis of variance (MANOVA):
     options.diagnosis = randi(2,175,1);
     options.control=0;
     options.taskID=0;
-    options.motion = rand(175,1);
+    options.control = rand(175,1);
     options.phenotypes= y;
     m = manova(g,options);
     m.run();
