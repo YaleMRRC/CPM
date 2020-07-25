@@ -27,6 +27,9 @@ classdef predictory < handle
         num_task;
         num_edge;
         all_edges;
+        all_pos_edges; % iter*edges TODO
+        all_neg_edges; % iter*edges TODO
+
         output;
         mse;
         control;
