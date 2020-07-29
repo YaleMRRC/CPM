@@ -40,6 +40,7 @@ classdef predictory < handle
             this.v_alpha = 1e-6;
             this.seed = 665;
             this.thresh=0.05;
+            this.control = options.control;
             
             this.group=group;
             this.phenotype=options.phenotype;
