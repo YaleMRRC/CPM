@@ -20,7 +20,7 @@ classdef rcpm < predictory
                 train.x = all_edges(:,train.indx);
                 test.y = this.phenotype.all_behav(indices.test(i_fold),:);
                 train.y = this.phenotype.all_behav(indices.training(i_fold),:);
-                
+                train.control = this.control(indices.training(i_fold));
                 % first step univariate edge selection
                 if size(this.control,1)
                     [edge_corr, edge_p] = partialcorr(train.x', train.y, train.control);
